@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "cpoint.h"
+#include "cenemy.h" // Make sure to include the enemy header
 
 class cbullet
 {
@@ -20,4 +21,10 @@ public:
     void setSpeed(int tspeed);
     int queryCFromRowCol(int row, int col) const;
     int calcPathBullet(const cpoint& tower);
+
+    // Bullet collision detection
+    bool checkCollision(const cenemy& enemy) const;
+
+    // Move bullet one step toward the enemy's current position
+    void trackEnemy(const cenemy& enemy);
 };

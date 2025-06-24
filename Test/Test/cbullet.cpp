@@ -3,6 +3,7 @@
 #include <cmath>      
 #include <algorithm> 
 #include <SFML/Graphics.hpp>
+#include "cenemy.h"
 
 using namespace std;
 
@@ -51,6 +52,29 @@ int cbullet::calcPathBullet(const cpoint& tower) {
     if (_n > 0)
         _curr = _p[0];
     return _n;
+}
+
+bool cbullet::checkCollision(const cenemy& enemy) const {
+    // Compare bullet's current grid position with enemy's grid position
+    cpoint enemyPos = enemy.getCurr();
+    return _curr.getRow() == enemyPos.getRow() && _curr.getCol() == enemyPos.getCol();
+}
+
+void cbullet::trackEnemy(const cenemy& enemy) {
+    cpoint enemyPos = enemy.getCurr();
+    int bulletRow = _curr.getRow();
+    int bulletCol = _curr.getCol();
+    int enemyRow = enemyPos.getRow();
+    int enemyCol = enemyPos.getCol();
+
+    // Move bullet one step closer to the enemy in row and/or col
+    if (bulletRow < enemyRow) bulletRow++;
+    else if (bulletRow > enemyRow) bulletRow--;
+
+    if (bulletCol < enemyCol) bulletCol++;
+    else if (bulletCol > enemyCol) bulletCol--;
+
+    _curr = cpoint(bulletRow, bulletCol, 0);
 }
 
 
