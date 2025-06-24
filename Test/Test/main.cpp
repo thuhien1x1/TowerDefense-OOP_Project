@@ -20,6 +20,14 @@ vector<Vector2f> convertPath(cpoint* path, int maxStep) {
     return result;
 }
 
+struct Bullet {
+    CircleShape shape;
+    int targetEnemyIdx; // Index of the enemy this bullet is tracking
+    bool active = true;
+};
+
+std::vector<Bullet> bullets;
+
 int main() {
     Texture backgroundTexture;
     if (!backgroundTexture.loadFromFile("background.png")) {
@@ -69,7 +77,6 @@ int main() {
     float speed = 120.f;
     vector<Sprite> towers;
 
-    vector<pair<CircleShape, int>> bullets;
     cbullet bulletLogic;
 
     Clock clock;
@@ -120,40 +127,64 @@ int main() {
 
         static float shootTimer = 0.f;
         shootTimer += deltaTime;
-        if (!towers.empty() && shootTimer > 1.f) {
+        if (!towers.empty() && shootTimer > 1.f && !enemies.empty()) {
             shootTimer = 0.f;
             cpoint towerPoint = cpoint::fromXYToRowCol(towers[0].getPosition().x, towers[0].getPosition().y);
             int nPath = bulletLogic.calcPathBullet(towerPoint);
             if (nPath > 0) {
-                CircleShape bulletShape(5.f);
-                bulletShape.setFillColor(Color::Red);
-                bulletShape.setOrigin(5.f, 5.f);
-                bulletShape.setPosition(bulletLogic.getP()[0].getPixelX(), bulletLogic.getP()[0].getPixelY());
-                bullets.push_back(std::make_pair(bulletShape, 0));
+                // Find the first active enemy as the target
+                int targetIdx = -1;
+                for (size_t i = 0; i < enemies.size(); ++i) {
+                    if (!enemies[i].reachedEnd) {
+                        targetIdx = static_cast<int>(i);
+                        break;
+                    }
+                }
+                if (targetIdx != -1) {
+                    Bullet b;
+                    b.shape = CircleShape(5.f);
+                    b.shape.setFillColor(Color::Red);
+                    b.shape.setOrigin(5.f, 5.f);
+                    b.shape.setPosition(bulletLogic.getP()[0].getPixelX(), bulletLogic.getP()[0].getPixelY());
+                    b.targetEnemyIdx = targetIdx;
+                    b.active = true;
+                    bullets.push_back(b);
+                }
             }
         }
 
         for (auto& bullet : bullets) {
-            CircleShape& shape = bullet.first;
-            int& pathIndex = bullet.second;
-            if (pathIndex + 1 < bulletLogic.getN()) {
-                Vector2f from = shape.getPosition();
-                Vector2f to(
-                    bulletLogic.getP()[pathIndex + 1].getPixelX(),
-                    bulletLogic.getP()[pathIndex + 1].getPixelY()
-                );
-                Vector2f dir = to - from;
-                float len = sqrt(dir.x * dir.x + dir.y * dir.y);
-                if (len > 1.f) {
-                    Vector2f normalizedDir = Vector2f(dir.x / len, dir.y / len);
-                    float scalar = bulletLogic.getSpeed() * deltaTime * 60.f;
-                    Vector2f moveVec(normalizedDir.x * scalar, normalizedDir.y * scalar);
-                    shape.move(moveVec);
-                }
-                else
-                    pathIndex++;
+            if (!bullet.active) continue;
+            if (bullet.targetEnemyIdx < 0 || bullet.targetEnemyIdx >= static_cast<int>(enemies.size())) {
+                bullet.active = false;
+                continue;
+            }
+            Enemy& target = enemies[bullet.targetEnemyIdx];
+            if (target.reachedEnd) {
+                bullet.active = false;
+                continue;
+            }
+            Vector2f bulletPos = bullet.shape.getPosition();
+            Vector2f enemyPos = target.sprite.getPosition();
+            Vector2f dir = enemyPos - bulletPos;
+            float len = sqrt(dir.x * dir.x + dir.y * dir.y);
+            if (len < 10.f) { // Collision threshold (adjust as needed)
+                bullet.active = false;
+                target.hitCount++;
+                // Optionally, mark enemy as dead or remove it if hitCount exceeds threshold
+                continue;
+            }
+            if (len > 0.1f) {
+                dir /= len;
+                float moveSpeed = bulletLogic.getSpeed() * deltaTime * 60.f;
+                bullet.shape.move(dir * moveSpeed);
             }
         }
+
+        bullets.erase(
+            std::remove_if(bullets.begin(), bullets.end(), [](const Bullet& b) { return !b.active; }),
+            bullets.end()
+        );
 
         window.clear();
         window.draw(backgroundSprite);
@@ -165,7 +196,7 @@ int main() {
             window.draw(e.sprite);
 
         for (const auto& bullet : bullets)
-            window.draw(bullet.first);
+            window.draw(bullet.shape);
 
         window.display();
     }
