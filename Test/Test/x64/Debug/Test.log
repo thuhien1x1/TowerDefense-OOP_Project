@@ -1,44 +1,27 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (Test.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  cbullet.cpp
-  cenemy.cpp
-  cgame.cpp
-  cmap.cpp
-  cpoint.cpp
-  ctower.cpp
+﻿E:\Microsoft Visual Studio\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(538,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (Test.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   main.cpp
-C:\TowerDefenseProject\Test\Test\main.cpp(18,73): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\TowerDefenseProject\Test\Test\main.cpp(18,73): warning C4244:         with
-C:\TowerDefenseProject\Test\Test\main.cpp(18,73): warning C4244:         [
-C:\TowerDefenseProject\Test\Test\main.cpp(18,73): warning C4244:             T=float
-C:\TowerDefenseProject\Test\Test\main.cpp(18,73): warning C4244:         ]
-C:\TowerDefenseProject\Test\Test\main.cpp(18,52): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\TowerDefenseProject\Test\Test\main.cpp(18,52): warning C4244:         with
-C:\TowerDefenseProject\Test\Test\main.cpp(18,52): warning C4244:         [
-C:\TowerDefenseProject\Test\Test\main.cpp(18,52): warning C4244:             T=float
-C:\TowerDefenseProject\Test\Test\main.cpp(18,52): warning C4244:         ]
-C:\TowerDefenseProject\Test\Test\main.cpp(95,109): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\TowerDefenseProject\Test\Test\main.cpp(95,77): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\TowerDefenseProject\Test\Test\main.cpp(124,106): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-C:\TowerDefenseProject\Test\Test\main.cpp(124,106): warning C4244:         with
-C:\TowerDefenseProject\Test\Test\main.cpp(124,106): warning C4244:         [
-C:\TowerDefenseProject\Test\Test\main.cpp(124,106): warning C4244:             T=float
-C:\TowerDefenseProject\Test\Test\main.cpp(124,106): warning C4244:         ]
-C:\TowerDefenseProject\Test\Test\main.cpp(124,79): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-C:\TowerDefenseProject\Test\Test\main.cpp(124,79): warning C4244:         with
-C:\TowerDefenseProject\Test\Test\main.cpp(124,79): warning C4244:         [
-C:\TowerDefenseProject\Test\Test\main.cpp(124,79): warning C4244:             T=float
-C:\TowerDefenseProject\Test\Test\main.cpp(124,79): warning C4244:         ]
-C:\TowerDefenseProject\Test\Test\main.cpp(130,107): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\TowerDefenseProject\Test\Test\main.cpp(130,72): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\TowerDefenseProject\Test\Test\main.cpp(142,64): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\TowerDefenseProject\Test\Test\main.cpp(142,64): warning C4244:         with
-C:\TowerDefenseProject\Test\Test\main.cpp(142,64): warning C4244:         [
-C:\TowerDefenseProject\Test\Test\main.cpp(142,64): warning C4244:             T=float
-C:\TowerDefenseProject\Test\Test\main.cpp(142,64): warning C4244:         ]
-C:\TowerDefenseProject\Test\Test\main.cpp(141,64): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\TowerDefenseProject\Test\Test\main.cpp(141,64): warning C4244:         with
-C:\TowerDefenseProject\Test\Test\main.cpp(141,64): warning C4244:         [
-C:\TowerDefenseProject\Test\Test\main.cpp(141,64): warning C4244:             T=float
-C:\TowerDefenseProject\Test\Test\main.cpp(141,64): warning C4244:         ]
-  Generating Code...
-  Test.vcxproj -> C:\TowerDefenseProject\Test\x64\Debug\Demo.exe
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(19,73): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(19,73): warning C4244:         with
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(19,73): warning C4244:         [
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(19,73): warning C4244:             T=float
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(19,73): warning C4244:         ]
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(19,52): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(19,52): warning C4244:         with
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(19,52): warning C4244:         [
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(19,52): warning C4244:             T=float
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(19,52): warning C4244:         ]
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(103,109): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(103,77): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(132,106): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(132,106): warning C4244:         with
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(132,106): warning C4244:         [
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(132,106): warning C4244:             T=float
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(132,106): warning C4244:         ]
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(132,79): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(132,79): warning C4244:         with
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(132,79): warning C4244:         [
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(132,79): warning C4244:             T=float
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(132,79): warning C4244:         ]
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(148,107): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\Test\main.cpp(148,72): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Test.vcxproj -> C:\Users\hienl\source\repos\TowerDefense-OOP_Project\Test\x64\Debug\Demo.exe
