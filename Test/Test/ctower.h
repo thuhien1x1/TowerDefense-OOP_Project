@@ -1,6 +1,7 @@
 #pragma once
 #include "cpoint.h"
 #include "cbullet.h"
+#include "cenemy.h"
 
 class ctower
 {

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
-#include <utility> 
+#include <utility>
 #include "cpoint.h"
 #include "cmap.h"
 #include "cenemy.h"
@@ -20,51 +20,60 @@ vector<Vector2f> convertPath(cpoint* path, int maxStep) {
     return result;
 }
 
-struct Bullet {
+struct Bullet
+{
     CircleShape shape;
     int targetEnemyIdx; // Index of the enemy this bullet is tracking
     bool active = true;
 };
+vector<Bullet> bullets;
 
-std::vector<Bullet> bullets;
+struct Enemy
+{
+    Sprite sprite;
+    int currentTarget = 1;
+    bool reachedEnd = false;
+    int hitCount = 0;
+};
 
 int main() {
+
+    // Texture set
     Texture backgroundTexture;
-    if (!backgroundTexture.loadFromFile("background.png")) {
+    if (!backgroundTexture.loadFromFile("background.png"))
+    {
         cerr << "Failed to load background!" << endl;
         return -1;
     }
 
     Texture towerTexture;
-    if (!towerTexture.loadFromFile("tower.png")) {
+    if (!towerTexture.loadFromFile("tower.png"))
+    {
         cerr << "Failed to load tower image!" << endl;
         return -1;
     }
 
     Texture enemyTexture;
-    if (!enemyTexture.loadFromFile("blockbott4.png")) {
+    if (!enemyTexture.loadFromFile("blockbott4.png"))
+    {
         cerr << "Failed to load enemy image!" << endl;
         return -1;
     }
 
+    // background
     Vector2u textureSize = backgroundTexture.getSize();
     RenderWindow window(VideoMode(textureSize.x, textureSize.y), "Tower Defense SFML");
     Sprite backgroundSprite(backgroundTexture);
 
+    // map
     cmap map;
     cenemy& ce = map.getEnemy();
     cpoint* pathData = ce.getP();
     int pathLen = ce.getPathLength();
     auto path = convertPath(pathData, pathLen);
 
-    struct Enemy {
-        Sprite sprite;
-        int currentTarget = 1;
-        bool reachedEnd = false;
-        int hitCount = 0;
-    };
+    // enemy sprite
     vector<Enemy> enemies;
-
     for (int i = 0; i < 10; i++) {
         Sprite sprite;
         sprite.setTexture(enemyTexture);
@@ -74,11 +83,10 @@ int main() {
         enemies.push_back({ sprite, 1, false, 0 });
     }
 
+    // tower + bullet
     float speed = 120.f;
     vector<Sprite> towers;
-
     cbullet bulletLogic;
-
     Clock clock;
 
     while (window.isOpen()) {
@@ -95,7 +103,7 @@ int main() {
                 cpoint clicked = cpoint::fromXYToRowCol(mouseX, mouseY);
                 int r = clicked.getRow(), c = clicked.getCol();
 
-                if (r >= 0 && r < cpoint::MAP_ROW && c >= 0 && c < cpoint::MAP_COL) {
+                if (r >= 0 && r < cpoint::MAP_ROW && c >= 0 && c < cpoint::MAP_COL && towers.size() < 3) {
                     if (map.getMap()[r][c].getC() == -1) {
                         Sprite towerSprite;
                         towerSprite.setTexture(towerTexture);
@@ -127,28 +135,36 @@ int main() {
 
         static float shootTimer = 0.f;
         shootTimer += deltaTime;
-        if (!towers.empty() && shootTimer > 1.f && !enemies.empty()) {
-            shootTimer = 0.f;
-            cpoint towerPoint = cpoint::fromXYToRowCol(towers[0].getPosition().x, towers[0].getPosition().y);
-            int nPath = bulletLogic.calcPathBullet(towerPoint);
-            if (nPath > 0) {
-                // Find the first active enemy as the target
-                int targetIdx = -1;
-                for (size_t i = 0; i < enemies.size(); ++i) {
-                    if (!enemies[i].reachedEnd) {
-                        targetIdx = static_cast<int>(i);
-                        break;
+        if (!towers.empty() && shootTimer > 1.f && !enemies.empty())
+        {
+            for (auto tw : towers)
+            {
+                shootTimer = 0.f;
+                cpoint towerPoint = cpoint::fromXYToRowCol(tw.getPosition().x, tw.getPosition().y);
+                int nPath = bulletLogic.calcPathBullet(towerPoint);
+                if (nPath > 0)
+                {
+                    // Find the first active enemy as the target
+                    int targetIdx = -1;
+                    for (size_t i = 0; i < enemies.size(); ++i)
+                    {
+                        if (!enemies[i].reachedEnd)
+                        {
+                            targetIdx = static_cast<int>(i);
+                            break;
+                        }
                     }
-                }
-                if (targetIdx != -1) {
-                    Bullet b;
-                    b.shape = CircleShape(5.f);
-                    b.shape.setFillColor(Color::Red);
-                    b.shape.setOrigin(5.f, 5.f);
-                    b.shape.setPosition(bulletLogic.getP()[0].getPixelX(), bulletLogic.getP()[0].getPixelY());
-                    b.targetEnemyIdx = targetIdx;
-                    b.active = true;
-                    bullets.push_back(b);
+                    if (targetIdx != -1)
+                    {
+                        Bullet b;
+                        b.shape = CircleShape(5.f);
+                        b.shape.setFillColor(Color::Red);
+                        b.shape.setOrigin(5.f, 5.f);
+                        b.shape.setPosition(bulletLogic.getP()[0].getPixelX(), bulletLogic.getP()[0].getPixelY());
+                        b.targetEnemyIdx = targetIdx;
+                        b.active = true;
+                        bullets.push_back(b);
+                    }
                 }
             }
         }
@@ -168,13 +184,19 @@ int main() {
             Vector2f enemyPos = target.sprite.getPosition();
             Vector2f dir = enemyPos - bulletPos;
             float len = sqrt(dir.x * dir.x + dir.y * dir.y);
-            if (len < 10.f) { // Collision threshold (adjust as needed)
+            if (len < 10.f) // Collision threshold (adjust as needed)
+            {
                 bullet.active = false;
                 target.hitCount++;
                 // Optionally, mark enemy as dead or remove it if hitCount exceeds threshold
+                if (target.hitCount == 3)
+                {
+                    enemies.erase(enemies.begin());
+                }
                 continue;
             }
-            if (len > 0.1f) {
+            if (len > 0.1f)
+            {
                 dir /= len;
                 float moveSpeed = bulletLogic.getSpeed() * deltaTime * 60.f;
                 bullet.shape.move(dir * moveSpeed);

@@ -23,6 +23,9 @@ public:
     int getPixelX() const;
     int getPixelY() const;
 
-    static cpoint fromXYToRowCol(int x, int y, int c = 0);
+    void setPixelX(int);
+    void setPixelY(int);
+
+    static cpoint fromXYToRowCol(int x, int y, int c = 0); // find at which row/col (tile) are now
     static cpoint fromRowColToXY(int row, int col, int c = 0);
 };
