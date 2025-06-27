@@ -1,6 +1,12 @@
 ﻿#pragma once
 #include "cpoint.h"
 
+#include <queue>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
 class cenemy
 {
 private:
@@ -10,24 +16,37 @@ private:
     int _pathLength;
     int dd[4], dc[4];
 
+    // runtime properties
+    int currentTarget = 1;
+    bool reachEnd = false;
+    int hitCount = 0;
 public:
     cenemy();
     cenemy(cpoint tstart, cpoint tend, cpoint tcurr);
 
-    cpoint* getP() { return _p; }
-    int getPathLength() const { return _pathLength; }
-    cpoint getStart() const { return _start; }
-    cpoint getEnd() const { return _end; }
-    int getSpeed() const { return _speed; }
-    cpoint getCurr() const { return _curr; }
+    // runtime process
+    void findPath(cpoint a[][cpoint::MAP_COL], cpoint s, cpoint e);
+    void move(float dt);
+    void onHit();
+    bool isDead() const;
+    bool isReachedEnd() const;
 
-    void setSpeed(int tspeed);
+    void setCurr(const cpoint& tcurr);
+    cpoint getCurr() const;
+
+    // path access
+    cpoint* getP();
+    int getPathLength() const;
+    int getCurrentTarget() const;
+    void setCurrentTarget(int);
+    
+    // getters, setters
+    cpoint getStart() const;
+    cpoint getEnd() const;
+    int getSpeed() const;
     void setStart(const cpoint& tstart);
     void setEnd(const cpoint& tend);
-    void setCurr(const cpoint& tcurr);
-
-    void findPath(cpoint a[][cpoint::MAP_COL], cpoint s, cpoint e);
-
+    void setSpeed(int tspeed);
 private:
     void calcPath(int a[][cpoint::MAP_COL], int n, cpoint s, cpoint e);
 };

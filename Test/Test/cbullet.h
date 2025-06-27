@@ -4,27 +4,38 @@
 
 class cbullet
 {
+private:
     int _n, _speed;
     cpoint _p[cpoint::MAP_ROW * cpoint::MAP_COL];
     cpoint _m[cpoint::MAP_ROW][cpoint::MAP_COL];
     cpoint _curr;
 
+    bool active = false;
+    int targetIndex = -1;
 public:
     cbullet();
+
+    // logic
     void updateMap(int i, int j, cpoint v);
-    cpoint getCurr() const;
-    void setCurr(const cpoint& tcurr);
-    cpoint* getP();
-    int getSpeed() const;
-    int getN() const;
-    void setN(int tn);
-    void setSpeed(int tspeed);
     int queryCFromRowCol(int row, int col) const;
     int calcPathBullet(const cpoint& tower);
 
-    // Bullet collision detection
-    bool checkCollision(const cenemy& enemy) const;
+    void trackEnemy(const cenemy& enemy); // Move bullet one step toward the enemy's current position
+    bool checkCollision(const cenemy& enemy) const; // Bullet collision detection
 
-    // Move bullet one step toward the enemy's current position
-    void trackEnemy(const cenemy& enemy);
+    // getters
+    cpoint getCurr() const;
+    cpoint* getP();
+    int getSpeed() const;
+    int getN() const;
+    int getTargetIndex() const;
+    bool isActive() const;
+
+    // setter
+    void setCurr(const cpoint& tcurr);
+    void setN(int tn);
+    void setSpeed(int tspeed);
+    void setTargetIdx(int idx);
+    void activate();
+    void deactivate();
 };

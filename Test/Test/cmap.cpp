@@ -1,5 +1,4 @@
 ﻿#include "cmap.h"
-#include <iostream>
 
 cmap::cmap() {
     resetMapData();
@@ -41,10 +40,12 @@ void cmap::makeMapData() {
     _ctw.calcPathBullet();
 }
 
+/*
 void cmap::drawMap() {
     for (int i = 0; i < cpoint::MAP_ROW; i++) {
         for (int j = 0; j < cpoint::MAP_COL; j++)
-            std::cout << (_m[i][j].getC() == -1 ? '+' : (_m[i][j].getC() == 0 ? '.' : ' '));
-        std::cout << '\n';
+            cout << (_m[i][j].getC() == -1 ? '+' : (_m[i][j].getC() == 0 ? '.' : ' '));
+        cout << '\n';
     }
 }
+*/
