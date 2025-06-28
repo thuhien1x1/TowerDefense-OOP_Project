@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <cmath>
@@ -222,4 +223,11 @@ int main() {
 
         window.display();
     }
+=======
+﻿#include "cgame.h"
+
+int main() {
+	cgame game;
+	game.run();
+>>>>>>> github-desktop-chinnnn3107/Update3
 }

@@ -2,7 +2,11 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
+<<<<<<< HEAD
       <FullPath>C:\Users\elnora\OneDrive - VNU-HCMUS\HCMUS\2024 - 2025\3\OOP\thuhien-625\Test\x64\Debug\Demo.exe</FullPath>
+=======
+      <FullPath>C:\Users\chinn\OneDrive\Documents\GitHub\TowerDefense-OOP_Project\Test\x64\Debug\Demo.exe</FullPath>
+>>>>>>> github-desktop-chinnnn3107/Update3
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />
