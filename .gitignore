@@ -1,9 +1,7 @@
- ```
- .vs/
- *.user
-     *.suo
-     *.VC.db
-     *.VC.opendb
-     Debug/
-     Release/
- ```
+.vs/
+*.user
+*.suo
+*.VC.db
+*.VC.opendb
+Debug/
+Release/
